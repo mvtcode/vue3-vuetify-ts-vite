@@ -13,14 +13,33 @@ const router = createRouter({
       }
     },
     {
-      path: '/about',
-      name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import('@/views/AboutView.vue')
-    }
+      path: "/login",
+      name: "login",
+      component: () => import("@/views/LoginView.vue"),
+      meta: {
+        title: "Đăng nhập",
+        permissions: [],
+      },
+    },
+    {
+      path: "/register",
+      name: "Register",
+      component: () => import("@/views/RegisterView.vue"),
+      meta: {
+        title: "Đăng ký",
+        permissions: [],
+      },
+    },
   ]
-})
+});
+
+const getPageTitle = (title: string) => {
+  return title ? `${title} - mPOS` : "mPOS";
+};
+
+router.beforeEach((to) => {
+  const meta: { [key: string]: any } = to.meta || {};
+  document.title = getPageTitle(meta.title);
+});
 
 export default router
